@@ -1,0 +1,7 @@
+//Class of movement in UserManagerAgent
+//contains 3 values- quantum of time, 
+public class Movement {
+	int Quantum;
+	String User;
+	String Cell;
+}

@@ -1,0 +1,62 @@
+import jade.core.*;
+import jade.core.behaviours.TickerBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+
+public class UserManagerAgent extends Agent{
+	
+	
+	protected void setup() {
+		System.out.println("UserManagerAgent :	" + getAID().getName()
+				+ " is ready.");
+		Object[] args = getArguments();
+		if (args != null && args.length > 0) {
+			String inputFile = (String) args[0];
+			System.out.println("Trying to parse " + inputFile);
+			parseUserRoutes(inputFile);
+			
+			//User movement behaviour
+			addBehaviour(new TickerBehaviour(this, 500) {
+				
+				protected void onTick() {
+					System.out.println("Trying to buy " + targetBookTitle);
+					DFAgentDescription template = new DFAgentDescription();
+					ServiceDescription sd = new ServiceDescription();
+					sd.setType("book-selling");
+					template.addServices(sd);
+					// ������������Ҫ�ķ���
+					try {
+						DFAgentDescription[] result = DFService.search(myAgent,
+								template);
+						// ��������Ҫ���������
+						System.out
+								.println("Found the following seller agents:");
+						// �������������б�
+						sellerAgents = new AID[result.length];
+						// ��ӡ�������б�
+						for (int i = 0; i < result.length; ++i) {
+							sellerAgents[i] = result[i].getName();
+							System.out.println(sellerAgents[i].getName());
+						}
+					} catch (FIPAException fe) {
+						fe.printStackTrace();
+					}
+					
+					myAgent.addBehaviour(new RequestPerformer());
+				}
+			});
+		} else {
+			System.out.println("No target book title specified");
+			doDelete();
+		}
+	}
+	
+	//Method to parse the routes of users
+	void parseUserRoutes(String inputFile)
+	{
+		
+	}
+
+}

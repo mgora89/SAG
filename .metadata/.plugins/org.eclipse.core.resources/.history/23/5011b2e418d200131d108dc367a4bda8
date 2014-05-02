@@ -1,0 +1,30 @@
+import jade.core.*;
+import jade.core.behaviours.TickerBehaviour;
+
+public class CellAgent extends Agent{
+	
+	//Method to parse the routes of users
+	
+	protected void setup() {
+		System.out.println("CellAgent :	" + getAID().getName()
+				+ " is ready.");
+		Object[] args = getArguments();
+		if (args != null && args.length > 0) {
+			String inputFile = (String) args[0];
+			System.out.println("Trying to parse " + inputFile);
+			parseNeighbours(inputFile);
+			
+			
+			
+		} else {
+			System.out.println("No input file specified");
+			doDelete();
+		}
+	}
+	
+	void parseNeighbours(String inputFile)
+	{
+		
+	}
+
+}

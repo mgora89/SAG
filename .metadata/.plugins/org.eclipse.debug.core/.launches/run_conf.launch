@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/CellularNet"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="jade.Boot"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-gui -agents um:UserManagerAgent(bin/routes.txt);C1:CellAgent(bin/cellnet.txt);C2:CellAgent(bin/cellnet.txt);C3:CellAgent(bin/cellnet.txt);C4:CellAgent(bin/cellnet.txt)"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="CellularNet"/>
+</launchConfiguration>

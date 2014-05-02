@@ -1,0 +1,4 @@
+-gui -agents um:UserManagerAgent(bin/routes.txt);C1:CellAgent(bin/cellnet.txt);C2:CellAgent(bin/cellnet.txt)
+
+
+-gui -agents um:UserManagerAgent(bin/routes.txt);C1:CellAgent(bin/cellnet.txt);C2:CellAgent(bin/cellnet.txt);C3:CellAgent(bin/cellnet.txt);C4:CellAgent(bin/cellnet.txt)

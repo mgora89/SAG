@@ -1,0 +1,7 @@
+INDEX VERSION 1.126+/home/raf1906/jade_workspace/.metadata/.plugins/org.eclipse.jdt.core
+3320019250.index
+4057195783.index
+2867082620.index
+1610500222.index
+605858549.index
+2557669873.index
