@@ -170,7 +170,9 @@ public class CellAgent extends Agent{
 			
 			
 			///find overseer
-	        DFAgentDescription dfd = new DFAgentDescription();
+		while(overseerName==null)
+		{
+			DFAgentDescription dfd = new DFAgentDescription();
 	        ServiceDescription sd  = new ServiceDescription();
 	        sd.setType( "overseer" );
 	        dfd.addServices(sd);
@@ -189,6 +191,7 @@ public class CellAgent extends Agent{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
 	        //end of overseer finding	
 			if(overseerName!=null)
 				System.out.println("CellAgent: "+cellName +" :Found Overseer: " + overseerName );
