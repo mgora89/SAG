@@ -38,7 +38,7 @@ public class MovementOverseerAgent extends Agent{
 				if(pos==-1)
 					movements.add(mr);
 				else
-					movements.elementAt(pos).howManyMoved++;
+					movements.elementAt(pos).movementQuantums.add(5);
 				
 			}
 			else
@@ -78,9 +78,10 @@ public class MovementOverseerAgent extends Agent{
 					for(int i=0; i<movements.size();i++)
 					{
 
-						if(movements.elementAt(i).howManyMoved>=5)
+						if(movements.elementAt(i).movementQuantums.size()>=5)
 						{
-							System.out.println("OVERSEER:GROUP MOVEMENT DETECTED FROM "+ movements.elementAt(i).cellFrom+" TO " +movements.elementAt(i).cellTo+"; "+movements.elementAt(i).howManyMoved + " USERS MOVED");
+							System.out.println("OVERSEER:GROUP MOVEMENT DETECTED FROM "+ movements.elementAt(i).cellFrom+" TO " +movements.elementAt(i).cellTo+"; "+movements.elementAt(i).movementQuantums.size() + " USERS MOVED");
+							movements.remove(i);
 							//<TODO> Pozostaje wyświetlić ruch
 							//Do momentu usunięcia ruchu w obiekcie movements jest
 							// informacja skad byl ruch i dokad i ile osob
@@ -91,18 +92,25 @@ public class MovementOverseerAgent extends Agent{
 							//Do zrobienia reprezentacja graficzna
 							//Zaznaczam, że moze byc tak, ze ruch grupy zostanie wykryty kilka razy na tym samym odcinku w kolejnych kwantach
 							//Do GUI mozna uzyc te klase
-							movements.remove(i);
 						}
 						else
-						{
-							movements.elementAt(i).howManyMoved--;
-							if(movements.elementAt(i).howManyMoved==0)
+						{	
+							for(int j=0; j<movements.elementAt(i).movementQuantums.size();j++)
+							{	
+								movements.elementAt(i).movementQuantums.set(j,new Integer(movements.elementAt(i).movementQuantums.elementAt(j)-1));
+								if(movements.elementAt(i).movementQuantums.elementAt(j)==0)
+								{
+								
+									movements.elementAt(i).movementQuantums.remove(j);
+
+								}
+							}
+							if(!movements.isEmpty() && movements.elementAt(i).movementQuantums.isEmpty())
 							{
 								System.out.println("OVERSEER: Movement from "+ movements.elementAt(i).cellFrom + " to "+ movements.elementAt(i).cellTo +" deleted");
 								movements.remove(i);
 							}
 						}
-
 							
 					}
 				}
