@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,7 +52,15 @@ public class UserManagerAgent extends Agent{
 
 					while(true)
 					{
+						if(moves.isEmpty())
+						{
+//							System.out.println("UserManagerAgent: No more movements");
+							break;
+						}
+						else
+						{
 						Movement m=moves.firstElement();
+						
 						if(m.Quantum==movementQuantums)
 						{
 							int index=search(m.User,currentStatus);
@@ -73,13 +82,19 @@ public class UserManagerAgent extends Agent{
 						}
 						
 						else break;
+						}
 					}
 					
 					// System.out.println("Found movement:"+m.Cell+" "+m.User +" at quantum:"+ m.Quantum);
 				    for(Movement mov:currentStatus)
 				    {
 					 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-				     msg.setContent(mov.User);
+				     Message M=new Message(mov.User,mov.Cell,Message.Type.USERHEARTBEAT);
+					 try {
+						msg.setContentObject(M);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				     msg.addReceiver( new AID( mov.Cell, AID.ISLOCALNAME) );
 				     send(msg);
 					}
@@ -144,6 +159,8 @@ public class UserManagerAgent extends Agent{
             }
         };
         Collections.sort(moves, QUANTUM);
+        
+        
 	}
 
 	
