@@ -168,29 +168,45 @@ public class JFrameManager {
 	{
 		synchronized(nodeListModel)
 		{
-			ArrayList<String> strs = new ArrayList<String>();
 			ArrayList<Object> objs = new ArrayList<Object>(Arrays.asList(nodeListModel.toArray()));
-			nodeListModel.clear();
 			ListIterator<Object> objIter = objs.listIterator();
-			
+				
 			while(objIter.hasNext())
 			{
 				String str = objIter.next().toString(); 
-				if(!str.contains(cellName))
+				if(str.contains(cellName))
 				{
-					strs.add(str);
+					nodeListModel.removeElement(str);
 				}
 			}
-			strs.add(cellName + " "+ newSize);
-			
-			java.util.Collections.sort(strs);
-			ListIterator<String> iter = strs.listIterator();
-			
-			while(iter.hasNext())
-			{
-				nodeListModel.addElement(iter.next().toString());		
-			}
+			nodeListModel.addElement(cellName + " " + newSize);
 		}
+		
+//		synchronized(nodeListModel)
+//		{
+//			ArrayList<String> strs = new ArrayList<String>();
+//			ArrayList<Object> objs = new ArrayList<Object>(Arrays.asList(nodeListModel.toArray()));
+//			ListIterator<Object> objIter = objs.listIterator();
+//			nodeListModel.removeAllElements();
+//				
+//			while(objIter.hasNext())
+//			{
+//				String str = objIter.next().toString(); 
+//				if(!str.contains(cellName))
+//				{
+//					strs.add(str);
+//				}
+//			}
+//			strs.add(cellName + " "+ newSize);
+//				
+//			java.util.Collections.sort(strs);
+//			ListIterator<String> iter = strs.listIterator();
+//				
+//			while(iter.hasNext())
+//			{
+//				nodeListModel.addElement(iter.next().toString());		
+//			}
+//		}
 	}
 	
 	public static void updateQuantum(int quantum)
