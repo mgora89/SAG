@@ -1,0 +1,6 @@
+
+public class CellularNode {
+	private String name; // node name
+	private String userCount; // number of users inside node
+	private String usersMoved; // users moved in last quantum
+}

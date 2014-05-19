@@ -49,7 +49,8 @@ public class UserManagerAgent extends Agent{
 				protected void onTick() {
 					movementQuantums++;
 					System.out.println("UserManagerAgent: Quantum " + movementQuantums);
-
+					JFrameManager.updateQuantum(movementQuantums);
+					
 					while(true)
 					{
 						if(moves.isEmpty())

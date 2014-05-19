@@ -1,0 +1,141 @@
+import java.util.Iterator;
+import java.util.Vector;
+
+import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.TickerBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
+
+
+public class MovementOverseerAgent extends Agent{
+	
+	Vector<MovementRecord> movements;
+	
+	private class DetectMovementBehaviour  extends Behaviour
+	{
+		
+		public void action() {
+			ACLMessage msg = myAgent.receive();
+			if (msg != null) 
+			{
+				 Message content=new Message(null,null,null);
+				try {
+					content = (Message)msg.getContentObject();
+				} catch (UnreadableException e) {
+					e.printStackTrace();
+				}
+				//String content=msg.getContent();
+				//System.out.println(cellName+":Obtained message: "+ msg.toString());
+//				System.out.println("OVERSEER: Obtained message: "+ content.user+"..."+content.receiverCell+"..."+ content.senderCell+"..."+content.messageType.toString());
+				MovementRecord mr=new MovementRecord(content.receiverCell,content.senderCell);
+
+				int pos=search(mr,movements);
+				if(pos==-1)
+					movements.add(mr);
+				else
+					movements.elementAt(pos).movementQuantums.add(5);
+				
+			}
+			else
+				block();
+		};
+		
+		public boolean done() {
+			return false;
+		}
+		
+		
+	};
+
+	protected void setup() 
+	{
+		Object[] args = getArguments();
+		JFrameManager.setup();
+		
+		movements=new Vector<MovementRecord>();
+		addBehaviour(new DetectMovementBehaviour());
+		//Register an overseer so that cell agents can see him
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.setName( getAID() ); 
+        ServiceDescription sd  = new ServiceDescription();
+        sd.setType( "overseer" );
+        sd.setName( getLocalName() );
+        dfd.addServices(sd);
+        
+        try {  
+            DFService.register(this, dfd );  
+        }
+        catch (FIPAException fe) { fe.printStackTrace(); }
+        //end of registration
+        
+		addBehaviour(new TickerBehaviour(this, 200) {
+
+			protected void onTick() {
+				if(movements.size()!=0)
+				{
+					for(int i=0; i<movements.size();i++)
+					{
+
+						if(movements.elementAt(i).movementQuantums.size()>=5)
+						{
+							System.out.println("OVERSEER:GROUP MOVEMENT DETECTED FROM "+ movements.elementAt(i).cellFrom+" TO " +movements.elementAt(i).cellTo+"; "+movements.elementAt(i).movementQuantums.size() + " USERS MOVED");
+							movements.remove(i);
+							//<TODO> Pozostaje wyświetlić ruch
+							//Do momentu usunięcia ruchu w obiekcie movements jest
+							// informacja skad byl ruch i dokad i ile osob
+							//Dziala to tak, ze co 0.2 sekundy sprawdza, czy byl ruch
+							// w ten sposob, ze jesli powyzej 5 osob sie poruszylo w kwancie 0.2 sekundy
+							//to uznajemy ze ruch i podajemy ilu i gdzie i zerujemy ruch
+							// jak bylo ponizej 5 to zmniejszamy o 1 w tym kwancie az do wyzerowania i wtedy kasujemy
+							//Do zrobienia reprezentacja graficzna
+							//Zaznaczam, że moze byc tak, ze ruch grupy zostanie wykryty kilka razy na tym samym odcinku w kolejnych kwantach
+							//Do GUI mozna uzyc te klase
+						}
+						else
+						{	
+							for(int j=0; j<movements.elementAt(i).movementQuantums.size();j++)
+							{	
+								movements.elementAt(i).movementQuantums.set(j,new Integer(movements.elementAt(i).movementQuantums.elementAt(j)-1));
+								if(movements.elementAt(i).movementQuantums.elementAt(j)==0)
+								{
+								
+									movements.elementAt(i).movementQuantums.remove(j);
+
+								}
+							}
+							if(!movements.isEmpty() && movements.elementAt(i).movementQuantums.isEmpty())
+							{
+								System.out.println("OVERSEER: Movement from "+ movements.elementAt(i).cellFrom + " to "+ movements.elementAt(i).cellTo +" deleted");
+								movements.remove(i);
+							}
+						}
+							
+					}
+				}
+			}
+			
+		});
+        
+        
+        System.out.println("OverseerAgent is ready");
+	};
+	
+	public int search(MovementRecord mr, Vector<MovementRecord>moves){  
+	    int place = -1;  
+	    boolean found = false;  
+	    for ( Iterator<MovementRecord> iter = moves.iterator(); iter.hasNext() && found == false; ) {  
+	        place++;
+	        MovementRecord temp = (MovementRecord) iter.next();  
+	        if(temp.cellFrom.equals(mr.cellFrom)&& temp.cellTo.equals(mr.cellTo))found=true;
+	    }
+	    if(found==true)    
+	    	return place;
+	    else
+	    	return -1;
+	}
+}

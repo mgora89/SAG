@@ -1,5 +1,0 @@
-import jade.core.*;
-
-public class UserManagerAgent extends Agent{
-
-}

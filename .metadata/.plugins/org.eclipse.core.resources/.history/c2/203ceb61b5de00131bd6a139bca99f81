@@ -1,0 +1,24 @@
+
+public class CellularEdge {
+
+	private String name;
+	private int moved;
+	
+	public CellularEdge(String edgeName)
+	{
+		this.setName(edgeName);
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getMoved() {
+		return moved;
+	}
+	public void setMoved(int moved) {
+		this.moved = moved;
+	}
+}

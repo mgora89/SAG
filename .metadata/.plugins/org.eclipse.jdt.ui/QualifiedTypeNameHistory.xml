@@ -1,4 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="jade.core.Agent"/>
+<fullyQualifiedTypeName name="edu.uci.ics.jung.visualization.control.EditingModalGraphMouse"/>
+<fullyQualifiedTypeName name="sun.misc.Lock"/>
+<fullyQualifiedTypeName name="java.util.ConcurrentModificationException"/>
+<fullyQualifiedTypeName name="java.util.concurrent.locks.Lock"/>
+<fullyQualifiedTypeName name="edu.uci.ics.jung.graph.Graph"/>
+<fullyQualifiedTypeName name="edu.uci.ics.jung.graph.SparseMultigraph"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="edu.uci.ics.jung.visualization.renderers.Renderer.Edge"/>
+<fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
+<fullyQualifiedTypeName name="javax.xml.transform.Transformer"/>
+<fullyQualifiedTypeName name="CellularEdge"/>
+<fullyQualifiedTypeName name="CellularNode"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="javax.swing.JLabel"/>
+<fullyQualifiedTypeName name="java.awt.BorderLayout"/>
+<fullyQualifiedTypeName name="javax.swing.GroupLayout"/>
+<fullyQualifiedTypeName name="java.awt.GridBagLayout"/>
+<fullyQualifiedTypeName name="edu.uci.ics.jung.visualization.renderers.DefaultEdgeLabelRenderer"/>
+<fullyQualifiedTypeName name="edu.uci.ics.jung.visualization.renderers.BasicEdgeLabelRenderer"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="edu.uci.ics.jung.visualization.renderers.EdgeLabelRenderer"/>
+<fullyQualifiedTypeName name="javax.swing.JList"/>
+<fullyQualifiedTypeName name="javax.swing.JPanel"/>
+<fullyQualifiedTypeName name="java.awt.FlowLayout"/>
+<fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
+<fullyQualifiedTypeName name="java.awt.ComponentOrientation"/>
+<fullyQualifiedTypeName name="CellularGraphView"/>
+<fullyQualifiedTypeName name="edu.uci.ics.jung.visualization.renderers.BasicEdgeRenderer"/>
+<fullyQualifiedTypeName name="org.apache.commons.collections15.Transformer"/>
+<fullyQualifiedTypeName name="org.apache.commons.collections15.functors.ConstantTransformer"/>
+<fullyQualifiedTypeName name="java.util.ListIterator"/>
+<fullyQualifiedTypeName name="edu.uci.ics.jung.graph.util.EdgeType"/>
+<fullyQualifiedTypeName name="javax.swing.ListSelectionModel"/>
+<fullyQualifiedTypeName name="java.awt.Dimension"/>
+<fullyQualifiedTypeName name="javax.swing.DefaultListModel"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="JFrameManager"/>
+<fullyQualifiedTypeName name="javax.swing.SwingConstants"/>
 </qualifiedTypeNameHistroy>

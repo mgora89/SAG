@@ -2,13 +2,21 @@
 <section name="Workbench">
 	<section name="org.eclipse.jdt.debug.ui.MAIN_METHOD_SELECTION_DIALOG">
 		<item value="true" key="ShowStatusLine"/>
-		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History&gt;&#x0A;&lt;historyRootNode&gt;&#x0A;&lt;infoNode&gt;=CellularNet/\/home\/raf1906\/Desktop\/JADE\/LIBS\/jade.jar&amp;lt;jade(Boot.class[Boot&lt;/infoNode&gt;&#x0A;&lt;/historyRootNode&gt;&#x0A;&lt;/History&gt;" key="History"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;History&gt;&#x0D;&#x0A;&lt;historyRootNode&gt;&#x0D;&#x0A;&lt;infoNode&gt;=CellularNet/\/home\/raf1906\/Desktop\/JADE\/LIBS\/jade.jar&amp;lt;jade(Boot.class[Boot&lt;/infoNode&gt;&#x0D;&#x0A;&lt;infoNode&gt;=JUNG/lib\/jung-samples-2.0.1.jar&amp;lt;edu.uci.ics.jung.samples(SimpleGraphDraw.class[SimpleGraphDraw&lt;/infoNode&gt;&#x0D;&#x0A;&lt;infoNode&gt;=JUNG/src&amp;lt;{SimpleGraphView.java[SimpleGraphView&lt;/infoNode&gt;&#x0D;&#x0A;&lt;/historyRootNode&gt;&#x0D;&#x0A;&lt;/History&gt;" key="History"/>
 		<section name="DialogBoundsSettings">
-			<item value="600" key="DIALOG_WIDTH"/>
+			<item value="393" key="DIALOG_WIDTH"/>
 			<item value="0" key="DIALOG_Y_ORIGIN"/>
 			<item value="174" key="DIALOG_X_ORIGIN"/>
-			<item value="500" key="DIALOG_HEIGHT"/>
-			<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+			<item value="522" key="DIALOG_HEIGHT"/>
+			<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		</section>
+	</section>
+	<section name="org.eclipse.jdt.internal.debug.ui.ExpressionInformationControlCreator$ExpressionInformationControl">
+		<item value="500" key="SashWeightDetails"/>
+		<item value="500" key="SashWeightTree"/>
+		<item value="194" key="HEIGHT"/>
+		<item value="614" key="WIDTH"/>
+	</section>
+	<section name="conditionHistory">
 	</section>
 </section>

@@ -1,0 +1,254 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Vector;
+
+import javax.swing.JFrame;
+
+import jade.core.*;
+import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.TickerBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
+import jade.domain.FIPAException;
+
+public class CellAgent extends Agent{
+	
+	private String cellName;
+	private String[] neighbourCellsStrings;
+	private Vector<cellUser> cUsers;
+	private String overseerName;
+	//private AID[] neighbourCellsAIDs;
+	
+	private class newUserBehaviour  extends Behaviour
+	{
+		
+		public void action() {
+			
+
+			ACLMessage msg = receive();
+			if (msg != null) 
+			{
+				 Message content=new Message(null,null,null);
+				try {
+					content = (Message)msg.getContentObject();
+				} catch (UnreadableException e) {
+					e.printStackTrace();
+				}
+				//String content=msg.getContent();
+				//System.out.println(cellName+":Obtained message: "+ msg.toString());
+//				System.out.println(cellName+":Obtained message: "+ content.user+"..."+content.receiverCell+"..."+content.messageType.toString());
+
+				//Parsing message
+				if(content.messageType==Message.Type.USERHEARTBEAT)
+				{
+					int pos=search(content.user,cUsers);
+					if(pos==-1)
+					{
+						//new user
+						cUsers.add(new cellUser(content.user));
+						
+					     //sending to neighbor strings
+					     for(String ncell:neighbourCellsStrings)
+					     {
+							 ACLMessage mes = new ACLMessage(ACLMessage.PROPAGATE);
+						     Message Me=new Message(content.user, ncell,cellName,Message.Type.CHECKUSEREXISTENCE);
+							 try 
+							 {
+								mes.setContentObject(Me);
+							 } 
+							 catch (Exception e) 
+							 {
+								e.printStackTrace();
+							 }
+							 //System.out.println(cellName+": Sending to cell: "+ncell);
+						     mes.addReceiver(new AID (ncell,AID.ISLOCALNAME) );
+						     send(mes);
+					    	 
+					     }
+					}
+					else{
+						cUsers.elementAt(pos).newQuantums=5;
+					}
+				}
+				else if(content.messageType==Message.Type.CHECKUSEREXISTENCE)
+				{
+					//checking if user was in thic cell
+					int pos= search(content.user, cUsers);
+					if(pos!=-1)
+					{
+//					 System.out.println(cellName+": MOVEMENT: "+content.user +" from "+content.receiverCell+" to "+content.senderCell );
+//					 Sending to overseer
+					 ACLMessage mesg = new ACLMessage(ACLMessage.INFORM);
+				     Message M=new Message(content.user,content.receiverCell,content.senderCell,Message.Type.MOVEMENTRECORD);
+					 try 
+					 {
+						mesg.setContentObject(M);
+					 } 
+					 catch (Exception e) 
+					 {
+						e.printStackTrace();
+					 }
+//					 System.out.println(cellName+": Sending to overseer");
+				     mesg.addReceiver(new AID (overseerName,AID.ISLOCALNAME) );
+				     send(mesg);
+					//Delete user- he moved so he is not here any more
+					cUsers.remove(pos);
+					}
+				}
+			}
+			else
+				block();
+			
+			updateCellUserCount
+		}
+		
+		public boolean done() {
+			return false;
+		}
+	};
+	//Method to parse the routes of users
+	
+	protected void setup() {
+
+		
+		addBehaviour(new TickerBehaviour(this, 2000) {
+
+			protected void onTick() {
+				if(cUsers.size()!=0)
+				{
+					for(int i=0; i<cUsers.size();i++)
+					{
+						cUsers.elementAt(i).newQuantums=cUsers.elementAt(i).newQuantums-1;
+						if(cUsers.elementAt(i).newQuantums==0)
+						{
+//						System.out.println("Cell:"+cellName+": User "+cUsers.elementAt(i).uName+": TIMEOUT-deleted");
+							cUsers.remove(i);
+							
+						}
+					}
+				}
+			}
+			
+		});
+		
+		///
+        
+//		System.out.println("CellAgent :	" + getAID().getName()
+//				+ " is ready");
+		
+		cUsers=new Vector<cellUser>();
+		cellName=getAID().getLocalName();
+		System.out.println("CellAgent with local name:" + cellName + " is ready");
+		//System.out.println("Working directory: "+ System.getProperty("user.dir"));
+		
+		Object[] args = getArguments();
+		if (args != null && args.length > 0) {
+			String inputFile = (String) args[0];
+			//System.out.println("Trying to parse " + inputFile);
+			
+			try
+			{
+				parseNeighbours(inputFile);
+				JFrameManager.setInputFile(inputFile);
+			}
+			catch(FileNotFoundException Exc)
+			{
+				Exc.printStackTrace();
+				//System.out.println("No such file: " + inputFile);
+			}
+		
+			addBehaviour(new newUserBehaviour());
+		
+			
+			
+			///find overseer
+		while(overseerName==null)
+		{
+			DFAgentDescription dfd = new DFAgentDescription();
+	        ServiceDescription sd  = new ServiceDescription();
+	        sd.setType( "overseer" );
+	        dfd.addServices(sd);
+	        
+	        DFAgentDescription[] result;
+	        
+			try {
+				result = DFService.search(this, dfd);
+		        if (result.length>0)
+		        {
+		        	overseerName=result[0].getName().getLocalName();
+		        	
+		        	
+		        }
+			} catch (FIPAException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	        //end of overseer finding	
+			if(overseerName!=null)
+				System.out.println("CellAgent: "+cellName +" :Found Overseer: " + overseerName );
+		} else {
+			System.out.println(cellName+ ": No input file specified");
+			doDelete();
+		}
+	}
+	
+	void parseNeighbours(String inputFile) throws FileNotFoundException
+	{
+		Scanner sc = new Scanner(new File(inputFile));
+		List<String> lines = new ArrayList<String>();
+		while (sc.hasNextLine()) {
+		  lines.add(sc.nextLine());
+		}
+
+		String[] arr = lines.toArray(new String[0]);
+		for(String a:arr)
+		{
+			//System.out.println(a);
+			String[] splitted = a.split(" ");
+			
+			if(splitted[0].equals(cellName))
+			{
+				//the neighbours list for a cell was found
+				//copying neighbour list
+				neighbourCellsStrings=new String[splitted.length-1];
+//				
+//				for(int i=1; i!=splitted.length;i++)
+//				{
+//					neighbourCellsStrings[i-1]=splitted[i];
+//				}
+				System.arraycopy(splitted, 1, neighbourCellsStrings, 0, splitted.length-1);
+				
+				//neighbourCellsStrings=cellName
+				break;
+			}
+		}
+		for(String a:neighbourCellsStrings)
+		{
+			System.out.println("Neighbours of cell " + cellName+ ": "+a);
+		}
+	}
+	
+	public int search(String user, Vector<cellUser>cu){  
+	    int place = -1;  
+	    boolean found = false;  
+	    for ( Iterator<cellUser> iter = cu.iterator(); iter.hasNext() && found == false; ) {  
+	        place++;
+	        cellUser temp = (cellUser) iter.next();  
+	        if(temp.uName.equals(user))found=true;
+	    }
+	    if(found==true)    
+	    	return place;
+	    else
+	    	return -1;
+	}
+
+}

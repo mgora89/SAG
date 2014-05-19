@@ -54,6 +54,9 @@ public class MovementOverseerAgent extends Agent{
 
 	protected void setup() 
 	{
+		Object[] args = getArguments();
+		JFrameManager.setup();
+		
 		movements=new Vector<MovementRecord>();
 		addBehaviour(new DetectMovementBehaviour());
 		//Register an overseer so that cell agents can see him
@@ -78,20 +81,21 @@ public class MovementOverseerAgent extends Agent{
 					for(int i=0; i<movements.size();i++)
 					{
 
+						JFrameManager.visualizeMovement(movements.elementAt(i));
 						if(movements.elementAt(i).movementQuantums.size()>=5)
 						{
-							System.out.println("OVERSEER:GROUP MOVEMENT DETECTED FROM "+ movements.elementAt(i).cellFrom+" TO " +movements.elementAt(i).cellTo+"; "+movements.elementAt(i).movementQuantums.size() + " USERS MOVED");
-							movements.remove(i);
-							//<TODO> Pozostaje wyświetlić ruch
+
 							//Do momentu usunięcia ruchu w obiekcie movements jest
 							// informacja skad byl ruch i dokad i ile osob
 							//Dziala to tak, ze co 0.2 sekundy sprawdza, czy byl ruch
 							// w ten sposob, ze jesli powyzej 5 osob sie poruszylo w kwancie 0.2 sekundy
 							//to uznajemy ze ruch i podajemy ilu i gdzie i zerujemy ruch
 							// jak bylo ponizej 5 to zmniejszamy o 1 w tym kwancie az do wyzerowania i wtedy kasujemy
-							//Do zrobienia reprezentacja graficzna
 							//Zaznaczam, że moze byc tak, ze ruch grupy zostanie wykryty kilka razy na tym samym odcinku w kolejnych kwantach
 							//Do GUI mozna uzyc te klase
+							System.out.println("OVERSEER:GROUP MOVEMENT DETECTED FROM "+ movements.elementAt(i).cellFrom+" TO " +movements.elementAt(i).cellTo+"; "+movements.elementAt(i).movementQuantums.size() + " USERS MOVED");
+							JFrameManager.addGroup(movements.elementAt(i).cellTo, +movements.elementAt(i).movementQuantums.size());
+							movements.remove(i);
 						}
 						else
 						{	

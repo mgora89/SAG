@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
+import javax.swing.JFrame;
+
 import jade.core.*;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.TickerBehaviour;
@@ -101,15 +103,11 @@ public class CellAgent extends Agent{
 					cUsers.remove(pos);
 					}
 				}
-				
-
-			     
-
-				
-
 			}
 			else
 				block();
+
+			JFrameManager.updateCellUserCount(cellName, cUsers.size());
 		}
 		
 		public boolean done() {
@@ -155,9 +153,11 @@ public class CellAgent extends Agent{
 		if (args != null && args.length > 0) {
 			String inputFile = (String) args[0];
 			//System.out.println("Trying to parse " + inputFile);
+			
 			try
 			{
 				parseNeighbours(inputFile);
+				JFrameManager.setInputFile(inputFile);
 			}
 			catch(FileNotFoundException Exc)
 			{
@@ -214,7 +214,6 @@ public class CellAgent extends Agent{
 		{
 			//System.out.println(a);
 			String[] splitted = a.split(" ");
-			//System.out.println(splitted[0]);
 			
 			if(splitted[0].equals(cellName))
 			{
