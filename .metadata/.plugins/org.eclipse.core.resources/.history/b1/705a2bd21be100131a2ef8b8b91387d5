@@ -55,7 +55,7 @@ public class MovementOverseerAgent extends Agent{
 	protected void setup() 
 	{
 		Object[] args = getArguments();
-//		JFrameManager.setup();
+		JFrameManager.setup();
 		
 		movements=new Vector<MovementRecord>();
 		addBehaviour(new DetectMovementBehaviour());
@@ -81,7 +81,7 @@ public class MovementOverseerAgent extends Agent{
 					for(int i=0; i<movements.size();i++)
 					{
 
-//						JFrameManager.visualizeMovement(movements.elementAt(i));
+						JFrameManager.visualizeMovement(movements.elementAt(i));
 						if(movements.elementAt(i).movementQuantums.size()>=5)
 						{
 
@@ -94,7 +94,7 @@ public class MovementOverseerAgent extends Agent{
 							//Zaznaczam, że moze byc tak, ze ruch grupy zostanie wykryty kilka razy na tym samym odcinku w kolejnych kwantach
 							//Do GUI mozna uzyc te klase
 							System.out.println("OVERSEER:GROUP MOVEMENT DETECTED FROM "+ movements.elementAt(i).cellFrom+" TO " +movements.elementAt(i).cellTo+"; "+movements.elementAt(i).movementQuantums.size() + " USERS MOVED");
-//							JFrameManager.addGroup(movements.elementAt(i).cellTo, +movements.elementAt(i).movementQuantums.size());
+							JFrameManager.addGroup(movements.elementAt(i).cellTo, +movements.elementAt(i).movementQuantums.size());
 							movements.remove(i);
 						}
 						else

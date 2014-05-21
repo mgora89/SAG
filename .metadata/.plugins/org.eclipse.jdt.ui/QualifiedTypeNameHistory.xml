@@ -34,12 +34,13 @@
 <fullyQualifiedTypeName name="edu.uci.ics.jung.visualization.renderers.BasicEdgeRenderer"/>
 <fullyQualifiedTypeName name="org.apache.commons.collections15.Transformer"/>
 <fullyQualifiedTypeName name="org.apache.commons.collections15.functors.ConstantTransformer"/>
-<fullyQualifiedTypeName name="java.util.ListIterator"/>
 <fullyQualifiedTypeName name="edu.uci.ics.jung.graph.util.EdgeType"/>
 <fullyQualifiedTypeName name="javax.swing.ListSelectionModel"/>
 <fullyQualifiedTypeName name="java.awt.Dimension"/>
-<fullyQualifiedTypeName name="javax.swing.DefaultListModel"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="JFrameManager"/>
 <fullyQualifiedTypeName name="javax.swing.SwingConstants"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="javax.swing.DefaultListModel"/>
+<fullyQualifiedTypeName name="java.util.ListIterator"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
 </qualifiedTypeNameHistroy>

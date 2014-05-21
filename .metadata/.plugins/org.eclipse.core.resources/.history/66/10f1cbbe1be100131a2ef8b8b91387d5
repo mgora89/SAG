@@ -107,7 +107,7 @@ public class CellAgent extends Agent{
 			else
 				block();
 
-//			JFrameManager.updateCellUserCount(cellName, cUsers.size());
+			JFrameManager.updateCellUserCount(cellName, cUsers.size());
 		}
 		
 		public boolean done() {
@@ -157,7 +157,7 @@ public class CellAgent extends Agent{
 			try
 			{
 				parseNeighbours(inputFile);
-//				JFrameManager.setInputFile(inputFile);
+				JFrameManager.setInputFile(inputFile);
 			}
 			catch(FileNotFoundException Exc)
 			{

@@ -55,7 +55,7 @@ public class MovementOverseerAgent extends Agent{
 	protected void setup() 
 	{
 		Object[] args = getArguments();
-//		JFrameManager.setup();
+		JFrameManager.setup();
 		
 		movements=new Vector<MovementRecord>();
 		addBehaviour(new DetectMovementBehaviour());

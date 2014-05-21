@@ -166,21 +166,20 @@ public class JFrameManager {
 	
 	public static void updateCellUserCount(String cellName, int newSize)
 	{
-//		synchronized(nodeListModel)
-//		{
-//			ArrayList<Object> objs = new ArrayList<Object>(Arrays.asList(nodeListModel.toArray()));
-//			ListIterator<Object> objIter = objs.listIterator();
-//				
-//			while(objIter.hasNext())
-//			{
-//				String str = objIter.next().toString(); 
-//				if(str.contains(cellName))
-//				{
-//					nodeListModel.removeElement(str);
-//				}
-//			}
-//			nodeListModel.addElement(cellName + " " + newSize);
-//		}
+		synchronized(nodeListModel)
+		{
+			ArrayList<Object> objs = new ArrayList<Object>(Arrays.asList(nodeListModel.toArray()));
+			ListIterator<Object> objIter = objs.listIterator();
+				
+			while(objIter.hasNext())
+			{
+				String str = objIter.next().toString(); 
+				if(!str.contains(cellName))
+				{
+					strs.add(str);
+				}
+			}
+		}
 		
 //		synchronized(nodeListModel)
 //		{

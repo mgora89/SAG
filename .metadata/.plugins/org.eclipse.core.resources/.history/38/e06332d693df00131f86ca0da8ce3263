@@ -166,47 +166,34 @@ public class JFrameManager {
 	
 	public static void updateCellUserCount(String cellName, int newSize)
 	{
-//		synchronized(nodeListModel)
-//		{
-//			ArrayList<Object> objs = new ArrayList<Object>(Arrays.asList(nodeListModel.toArray()));
-//			ListIterator<Object> objIter = objs.listIterator();
-//				
-//			while(objIter.hasNext())
-//			{
-//				String str = objIter.next().toString(); 
-//				if(str.contains(cellName))
-//				{
-//					nodeListModel.removeElement(str);
-//				}
-//			}
-//			nodeListModel.addElement(cellName + " " + newSize);
-//		}
-		
-//		synchronized(nodeListModel)
-//		{
-//			ArrayList<String> strs = new ArrayList<String>();
-//			ArrayList<Object> objs = new ArrayList<Object>(Arrays.asList(nodeListModel.toArray()));
-//			ListIterator<Object> objIter = objs.listIterator();
-//			nodeListModel.removeAllElements();
-//				
-//			while(objIter.hasNext())
-//			{
-//				String str = objIter.next().toString(); 
-//				if(!str.contains(cellName))
-//				{
-//					strs.add(str);
-//				}
-//			}
-//			strs.add(cellName + " "+ newSize);
-//				
-//			java.util.Collections.sort(strs);
-//			ListIterator<String> iter = strs.listIterator();
-//				
-//			while(iter.hasNext())
-//			{
-//				nodeListModel.addElement(iter.next().toString());		
-//			}
-//		}
+		synchronized(nodeListModel)
+		{
+			synchronized(edges)
+			{
+				ArrayList<String> strs = new ArrayList<String>();
+				ArrayList<Object> objs = new ArrayList<Object>(Arrays.asList(nodeListModel.toArray()));
+				ListIterator<Object> objIter = objs.listIterator();
+				nodeListModel.removeAllElements();
+				
+				while(objIter.hasNext())
+				{
+					String str = objIter.next().toString(); 
+					if(!str.contains(cellName))
+					{
+						strs.add(str);
+					}
+				}
+				strs.add(cellName + " "+ newSize);
+				
+				java.util.Collections.sort(strs);
+				ListIterator<String> iter = strs.listIterator();
+				
+				while(iter.hasNext())
+				{
+					nodeListModel.addElement(iter.next().toString());		
+				}
+			}
+		}
 	}
 	
 	public static void updateQuantum(int quantum)

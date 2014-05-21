@@ -157,7 +157,7 @@ public class CellAgent extends Agent{
 			try
 			{
 				parseNeighbours(inputFile);
-//				JFrameManager.setInputFile(inputFile);
+				JFrameManager.setInputFile(inputFile);
 			}
 			catch(FileNotFoundException Exc)
 			{
